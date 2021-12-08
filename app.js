@@ -53,11 +53,10 @@ function verileriKontrolEt(kisi) {
 
 }
 function kisiyiGuncelle(kisi) {
-    //burda kisinin yeni degerleri vardır secilen satırda da eski degerler var 
-    //biz oncele tmkisiler listeside yeni kisiyi aktarmak lzım
+
     for (let index = 0; index < tumKisiler.length; index++) {
-        if (secilenSatir.cells[2].textContent === tumKisiler[index].mail) {//eger eski deger ile tumkisiler içindeki aynı ise
-            tumKisiler[index] = kisi;//yenisini aktardık
+        if (secilenSatir.cells[2].textContent === tumKisiler[index].mail) {
+            tumKisiler[index] = kisi;
             break;
         }
     }
@@ -66,17 +65,16 @@ function kisiyiGuncelle(kisi) {
     secilenSatir.cells[2].textContent = kisi.mail;
     const submitButton = document.querySelector(".kaydetGuncelle");
     submitButton.textContent = "kaydet";
-    //sonra secilenSatiri undifed yapalımki kaydet işlemleride yapılabilsin
     secilenSatir = undefined;
 
 }
 function kisiIslemleriYap(e) {
-    //e.target  baglı olcan classın tumunu alır ve tıklanan her bolumu veriri
-    if (e.target.classList.contains("btn--edit")) {//bizde e.targetin classi btn edit olanı aldık ve bu artık sadece tıklandıgında butonu vercek 
+
+    if (e.target.classList.contains("btn--edit")) {
         const submitButton = document.querySelector(".kaydetGuncelle");
         submitButton.value = "guncelle";
         const duzenlenecekSatir = e.target.parentElement.parentElement;
-        //duzenlecek saırın mailini bu sefer tablo uzerinden secelim yani cels ile
+
         const guncelelenecekMail = duzenlenecekSatir.cells[2].textContent;
         ad.value = duzenlenecekSatir.cells[0].textContent;
         soyad.value = duzenlenecekSatir.cells[1].textContent;
@@ -87,16 +85,16 @@ function kisiIslemleriYap(e) {
     }
     else if (e.target.classList.contains("btn--delete")) {
         const silinecekTR = e.target.parentElement.parentElement;
-        const silincecekMail = e.target.parentElement.previousElementSibling.textContent;//biz burda td ye ulastık ve bir onceki mail oluyor
-        rehberdenSil(silinecekTR, silincecekMail);//burda target buton oluyor.birinci parent td ikinci parent tr oluyor
+        const silincecekMail = e.target.parentElement.previousElementSibling.textContent;
+        rehberdenSil(silinecekTR, silincecekMail);
 
     }
 }
 function rehberdenSil(silinecekTR, silincecekMail) {
-    silinecekTR.remove();//oncesatırı siliyoruz
+    silinecekTR.remove();
     console.log(silinecekTR, silincecekMail);
-    // maile gore silme islemi
-    tumKisiler.forEach((kisi, index) => {//sonra tum kisiler dizisinde bu indexi siliyoruz
+
+    tumKisiler.forEach((kisi, index) => {
         if (kisi.mail === silincecekMail) {
             tumKisiler.splice(index, 1);
         }
@@ -133,21 +131,18 @@ function kisiyiEkle(eklenecekKisi) {
 }
 
 function bilgiOlsutur(mesaj, durum) {
-    const olusturulanBilgi = document.createElement("div");//div olsuturduk
-    olusturulanBilgi.textContent = mesaj;//degeri atadık
+    const olusturulanBilgi = document.createElement("div");
+    olusturulanBilgi.textContent = mesaj;
     olusturulanBilgi.className = "bilgi";
-    //document.querySelector(".container").appendChild(olusturulanBilgi);//append child sona ekler biz basa eklemek istiyoruz
-    // oyuzden insert.before yapısnnu kullancaz
-    document.querySelector(".container").insertBefore(olusturulanBilgi, form);//bu hangi yeni nesne ve hangisinden once gelsin diyo
-    //biz formdan once dedik ve form yukaıda baglı zaten 
-    //simdi biz hata ya gore bilgi classlarını gosterecez
+
+
+    document.querySelector(".container").insertBefore(olusturulanBilgi, form);
+
     olusturulanBilgi.classList.add(durum ? "bilgi-success" : "bilgi-error");
 
-    //jsde setTimeout ve setInterval var sanye işlemleridir
-    //sertTimeout 2 saniye sonra calısır biz iki saniye sonra bu kutuucgu sildirecez
     setTimeout(() => {
         const silinecekDiv = document.querySelector(".bilgi");
-        if (silinecekDiv) {//yani div varmo yok mu zaten ya hata yada basarıll diye bir div cıkıyor
+        if (silinecekDiv) {
             silinecekDiv.remove();
         }
     }, 2000);
